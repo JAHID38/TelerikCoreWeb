@@ -1,0 +1,170 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+<section class="jumbotron text-center">
+    <div class="container">
+        @*<h1 class="jumbotron-heading">@ViewBag.Title.</h1>*@
+        <h1 class="jumbotron-heading">Telerik</h1>
+        <p class="lead-text text-muted">@ViewBag.Message</p>
+    </div>
+</section>
+
+<div class="container-fluid">
+    <div class="col-md-4">
+<div id="add-product" class="demo-section">
+            <p class="title">Add new product</p>
+            <ul id="fieldlist">
+                <li>
+                    <label for="currency">Price:</label>
+      @(Html.Kendo().NumericTextBox<decimal>()
+            .Name("currency")
+            .Format("c")
+            .Min(0)
+            .Max(100)
+            .Value(100)
+            .HtmlAttributes(new { style = "width: 100%", title = "currency" })
+      )
+    </li>
+    <li>
+        <label for="percentage">Price Discount:</label>
+      @(Html.Kendo().NumericTextBox<double>()
+            .Name("percentage")
+            .Format("p0")
+            .Min(0)
+            .Max(0.9)
+            .Step(0.01)
+            .Value(0.4)
+            .HtmlAttributes(new { style = "width: 100%", title = "percentage" })
+        )
+    </li>
+    <li>
+        <label for="custom">Weight:</label>
+      @(Html.Kendo().NumericTextBox<double>()
+            .Name("custom")
+            .Format("#.00 KG")
+			.Min(0)
+            .Value(0.25)
+            .HtmlAttributes(new { style = "width: 100%", title = "custom" })
+      )
+   </li>
+    <li>
+        <label for="numeric">Currently in stock:</label>
+      @(Html.Kendo().NumericTextBox<double>()
+            .Name("numeric")
+            .Value(79)
+            .Placeholder("Enter numeric value")
+            .HtmlAttributes(new { style = "width: 100%", title = "numeric" })
+      )
+    </li>
+ </ul>
+</div>
+
+<hr />
+        <div id="tshirt-view" class="demo-section">
+    <h4>Customize your Kendo T-shirt</h4>
+    <a href="@Url.Content("~/images/tshirt.png")" target="_blank">
+                        <img src="@Url.Content("~/images/tshirt.png")"
+                        id="tshirt" alt="T-shirt image"/>
+    </a>
+    <h4><label for="fabric">T-shirt Fabric</label></h4>
+    @(Html.Kendo().ComboBox()
+          .Name("fabric")
+          .Filter(FilterType.Contains)
+          .Placeholder("Select fabric...")
+          .DataTextField("Text")
+          .DataValueField("Value")
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                Text = "Cotton", Value = "1"
+              },
+              new SelectListItem() {
+                Text = "Polyester", Value = "2"
+              },
+              new SelectListItem() {
+                Text = "Cotton/Polyester", Value = "3"
+              },
+              new SelectListItem() {
+                Text = "Rib Knit", Value = "4"
+              }
+          })
+          .SelectedIndex(3)
+          .Suggest(true)
+          .HtmlAttributes(new { style = "width:100%;" })
+    )
+
+    <h4 style="margin-top: 2em;"><label for="size">T-shirt Size</label></h4>
+    @(Html.Kendo().ComboBox()
+          .Name("size")
+          .Placeholder("Select size...")
+          .BindTo(new List<string>() {
+              "X-Small",
+              "Small",
+              "Medium",
+              "Large",
+              "X-Large",
+              "2X-Large"
+          })
+          .SelectedIndex(0)
+          .Suggest(true)
+          .HtmlAttributes(new { style = "width:100%;" })
+    )
+
+    <button class="k-button k-button-solid-primary k-button-solid k-button-md k-rounded-md " id="get" style="margin-top: 2em;">Customize</button>
+</div>
+
+    </div>
+</div>
+
+ <style>
+    .demo-section {
+        padding: 0;
+    }
+
+    #add-product .title {
+        font-size: 16px;
+        color: #fff;
+        background-color: #1e88e5;
+        padding: 20px 30px;
+        margin: 0;
+    }
+
+    #fieldlist {
+        margin: 0 0 -1.5em;
+        padding: 30px;
+    }
+
+    #fieldlist li {
+        list-style: none;
+        padding-bottom: 1.5em;
+    }
+
+    #fieldlist label {
+        display: block;
+        padding-bottom: .6em;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    #tshirt {
+        display: block;
+        margin: 2em auto;
+    }
+
+    .k-readonly {
+        color: gray;
+    }
+
+</style>
+
+<script>
+    $(document).ready(function() {
+        var fabric = $("#fabric").data("kendoComboBox");
+        var size = $("#size").data("kendoComboBox");
+
+		$("#get").click(function() {
+		    alert('Thank you! Your Choice is:\n\nFabric ID: ' + fabric.value() + ' and Size: ' + size.value());
+        });
+    });
+</script>
