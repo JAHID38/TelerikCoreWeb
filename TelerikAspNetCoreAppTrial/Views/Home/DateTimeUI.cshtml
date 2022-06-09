@@ -1,0 +1,107 @@
+﻿@page
+@using Kendo.Mvc.UI
+@using Kendo.Mvc
+@model TestWebApps.Pages.DateTimeUIModel
+@{
+}
+
+ <div class="demo-section">
+    <h4>Enter a date</h4>
+    @(Html.Kendo().DateInput()
+              .Name("dateinput1")
+              .HtmlAttributes(new { style = "width: 100%", title = "please enter date" })
+    )
+</div>
+
+<div class="demo-section">
+        <h4>Show e-mails from:</h4>
+        @(Html.Kendo().DatePicker()
+              .Name("datepicker")
+              .Value("10/10/2011")
+              .HtmlAttributes(new { style = "width: 100%", title = "datepicker" })
+        )
+   <h4 style="margin-top: 2em;">Add to archive mail from:</h4>
+        @(Html.Kendo().DatePicker()
+              .Name("monthpicker")
+              .Start(CalendarView.Year)
+              .Depth(CalendarView.Year)
+              .Format("MMMM yyyy")
+              .Value("November 2011")
+              .DateInput()
+              .HtmlAttributes(new { style = "width: 100%", title = "monthpicker" })
+        )
+</div>
+
+                 
+
+<div id="example" style="text-align: center;">
+    <div class="demo-section wide" style="display: inline-block;">
+        <h4>Pick a date range</h4>
+        @(Html.Kendo().DateRangePicker()
+            .Name("daterangepicker")
+            .HtmlAttributes(new { style = "width: 100%", title = "daterangepicker" })
+        )
+    </div>
+</div>
+
+              <div class="demo-section" >
+    <h4>Set alarm time:</h4>
+    @(Html.Kendo().TimePicker()
+        .Name("timepicker")
+        .Value("10:00 AM")
+        .HtmlAttributes(new { style = "width: 100%", title = "timepicker" })
+        .DateInput()
+    )
+    </div>
+
+
+
+<style>
+    .demo-section.wide {
+        max-width: 1025px;
+    }
+
+    .template-container {
+        padding: 10px 10px 0px 10px;
+    }
+
+    .template-container img {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: -10px;
+    }
+
+    .column-status {
+        padding-top: 5px;
+    }
+
+    .column-text {
+        padding-left: 10px;
+    }
+
+    .column-template-container,
+    .template-header {
+        width: 100%;
+        display: flex;
+    }
+
+    .column-buttons {
+        margin-left: auto;
+        margin-right: 0;
+        padding-right: 5px;
+    }
+
+    .template-menu {
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .template-title {
+        color: red;
+        word-wrap: break-word;
+    }
+
+    .k-taskboard-drag-hint {
+        font: 400 14px Arial,Helvetica,sans-serif;
+    }
+</style>

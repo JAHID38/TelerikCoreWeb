@@ -10,9 +10,9 @@
     </div>
 </section>
 
-<div class="container-fluid">
-    <div class="col-md-4">
-<div id="add-product" class="demo-section">
+<div class="container-fluid justify-content-between row">
+    <div class="card col-md-4">
+        <div id="add-product" class="demo-section card-body">
             <p class="title">Add new product</p>
             <ul id="fieldlist">
                 <li>
@@ -59,9 +59,10 @@
     </li>
  </ul>
 </div>
+    </div>
 
-<hr />
-        <div id="tshirt-view" class="demo-section">
+    <div class="col-md-4 card">
+        <div id="tshirt-view" class="demo-section card-body">
     <h4>Customize your Kendo T-shirt</h4>
     <a href="@Url.Content("~/images/tshirt.png")" target="_blank">
                         <img src="@Url.Content("~/images/tshirt.png")"
@@ -112,13 +113,131 @@
 
     <button class="k-button k-button-solid-primary k-button-solid k-button-md k-rounded-md " id="get" style="margin-top: 2em;">Customize</button>
 </div>
+    </div>
 
+    <div class="card col-md-4">
+        <div class="demo-section card-body">
+                    <h4>Date of Birth:</h4>
+        @(Html.Kendo().DatePicker()
+              .Name("datepicker")
+              .Value(DateTime.Now.Date)
+              .Format("MMM dd, yyyy")
+              .ComponentType("modern")
+            .Size(ComponentSize.Large)
+            .Rounded(Rounded.Full)
+            .FillMode(FillMode.Solid)
+            .DateInput()
+              .HtmlAttributes(new { style = "width: 100%", title = "datepicker" })
+        )
+
+        <div class="demo-section">
+    <h4>Entry Time:</h4>
+    <div>
+        @(Html.Kendo().TimePicker()
+            .Name("timepicker")
+            .Value(DateTime.Now.TimeOfDay)
+            .ComponentType("modern")
+            .Size(ComponentSize.Large)
+            .Rounded(Rounded.Full)
+            .FillMode(FillMode.Solid)
+            .HtmlAttributes(new { style = "width: 100%", title = "timepicker" })
+            .DateInput()
+            
+        )
     </div>
 </div>
+
+<div class="demo-section">
+        <h4 class="label">Agreements on Terms and Policies:</h4>
+        <div>
+            <input type="checkbox" id="selectAllCheckbox" class="k-checkbox k-checkbox-md k-rounded-md k-roundend-md">
+            <label class="k-checkbox-label" for="selectAllCheckbox">Select all available options</label>
+        </div>
+        <br />
+        @(Html.Kendo().CheckBoxGroup()
+            .Name("checkboxgroup")
+            .Items(i =>
+            {
+                i.Add().Label("You agree to the our company's terms and policies").Value("1");
+                i.Add().Label("You agree to our cookies settings").Value("2");
+                i.Add().Label("Your privacy at this site is strictly followed up").Value("5").Enabled(false);
+            })
+            .Value(new string[] { "5" })
+        )
+    </div>
+
+<div class="demo-section">
+    <h4>Gender :</h4>
+    <ul class="radiofieldlist">
+        <li>
+            @(Html.Kendo().RadioButton().Name("female").Checked(true).HtmlAttributes(new { @name = "gender" }).Label("Female"))
+        </li>
+        <li>
+            @(Html.Kendo().RadioButton().Name("male").HtmlAttributes(new { @name = "gender" }).Label("Male"))
+        </li>
+        <li>
+            @(Html.Kendo().RadioButton().Name("others").Enable(false).HtmlAttributes(new { @name = "gender" }).Label("Others"))
+        </li>
+    </ul>
+</div>
+</div>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+<div class="container-fluid justify-content-between row">
+    <div class="card col-md-4">
+        <div class="demo-section card-body">
+    <h2>Domain Experiences:</h2>
+    @(Html.Kendo().MultiSelect()
+          .Name("required")
+          .Placeholder("Select domains...")
+          .BindTo(new List<string>() {
+              "FinTech",
+              "HealthTech",
+              "HealthCare",
+              "HealthAutomation",
+              "RMG",
+              "FMCG",
+              "GarmentsERP",
+              "EducationERP",
+              "HospitalERP",
+              "CapitalMarket",
+              "BankingSolution",
+              "HRM"
+              
+          })
+          .Value(new string[] {  })   
+          .Size(ComponentSize.Large)
+            .Rounded(Rounded.Medium)
+            .FillMode(FillMode.Solid)
+    )
+    <button class="k-button k-button-solid-primary k-button-solid k-button-md k-rounded-md " id="domain" style="margin-top: 2em;">Test Domain</button>
+</div>
+    </div>
+</div>
+
+
 
  <style>
     .demo-section {
         padding: 0;
+        margin-top: 2em;
+    }
+
+    .demo-section label {
+        display: block;
+        margin: 15px 0 5px 0;
+    }
+
+    #domain {
+        float: right;
+        margin: 25px auto 0;
     }
 
     #add-product .title {
@@ -147,6 +266,16 @@
         font-size: 12px;
     }
 
+    .radiofieldlist {
+        margin: 0 0 -1em;
+        padding: 0;
+    }
+
+        .radiofieldlist li {
+            list-style: none;
+            padding-bottom: 1em;
+        }
+
     #tshirt {
         display: block;
         margin: 2em auto;
@@ -163,8 +292,23 @@
         var fabric = $("#fabric").data("kendoComboBox");
         var size = $("#size").data("kendoComboBox");
 
+        var required = $("#required").data("kendoMultiSelect");
+
+        $("#domain").click(function () {
+            alert("Domain Experienced:\n " + required.value() +"\n\n");
+        });
+
 		$("#get").click(function() {
 		    alert('Thank you! Your Choice is:\n\nFabric ID: ' + fabric.value() + ' and Size: ' + size.value());
         });
+    });
+
+     $("#selectAllCheckbox").change(function () {
+        var checkBoxGroup = $("#checkboxgroup").data("kendoCheckBoxGroup")
+        if (this.checked) {
+            checkBoxGroup.checkAll(true)
+        } else {
+            checkBoxGroup.checkAll(false)
+        }
     });
 </script>

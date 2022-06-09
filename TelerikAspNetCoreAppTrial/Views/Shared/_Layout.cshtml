@@ -39,8 +39,10 @@
                         .Items(items =>
                         {
                             items.Add().Text("Home").Action("Index", "Home", new { area = "" });
+                            items.Add().Text("Registration").Action("Registration", "Home", new { area = "" });
                             items.Add().Text("Try Me").Action("About", "Home", new { area = "" });
                             items.Add().Text("Contact").Action("Contact", "Home", new { area = "" });
+                            items.Add().Text("DateTime").Action("DateTimeUI", "Home", new { area = "" });
                         })
             )
         </kendo-responsivepanel>

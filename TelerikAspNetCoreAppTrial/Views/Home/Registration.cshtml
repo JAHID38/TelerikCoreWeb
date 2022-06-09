@@ -1,0 +1,98 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<div class="container">
+    <div class="demo-section col-md-6">
+        <div id="validation-success"></div>
+
+        @(Html.Kendo().Form<TelerikAspNetCoreAppTrial.Models.UserViewModel>()
+            .Name("exampleForm")
+            .HtmlAttributes(new { action = "Registration", method = "POST" })
+            .Orientation("horizontal")
+            .Validatable(v =>
+            {
+                v.ValidateOnBlur(true);
+                v.ValidationSummary(vs => vs.Enable(false));
+            })
+            .Items(items =>
+            {
+                items.AddGroup()
+                    .Label("Registration Form")
+                    .Items(i =>
+                    {
+                       i.Add()
+                            .Field(f => f.FirstName)
+                            .Label(l => l.Text("First Name:"));
+                        i.Add()
+                            .Field(f => f.LastName)
+                            .Label(l => l.Text("Last Name:"));
+                        i.Add()
+                            .Field(f => f.UserName)
+                            .Label(l => l.Text("Username:"));
+                        i.Add()
+                            .Field(f => f.Password)
+                            .Label(l => l.Text("Password:"))
+                            .Hint("Hint: enter alphanumeric characters only.")
+                            .EditorTemplateHandler("setPasswordEditor");
+                        i.Add()
+                            .Field(f => f.Email)
+                            .Label(l => l.Text("Email:"));
+                        i.Add()
+                            .Field(f => f.DateOfBirth)
+                            .Label(l => l.Text("Date of Birth:"));
+                        i.Add()
+                            .Field(f => f.Agree)
+                            .Label(l => l.Text("Agree to Terms:"));
+                    });
+            })
+            .Events(ev => ev.ValidateField("onFormValidateField").Submit("onFormSubmit").Clear("onFormClear"))
+        )
+    </div>
+</div>
+
+<script>
+    $(document).ready( function () {
+        //$("#orientation").kendoDropDownList({
+        //    dataTextField: "text",
+        //    dataValueField: "value",
+        //    dataSource: [
+        //        { text: "Vertical", value: "vertical" },
+        //        { text: "Horizontal", value: "horizontal" }
+        //    ]
+        //});
+
+        //$("#apply").click(function (e) {
+        //    var form = $("#exampleForm").data("kendoForm");
+        //    var dropdownlist = $("#orientation").data("kendoDropDownList");
+
+        //    form.setOptions({
+        //        orientation: dropdownlist.value()
+        //    })
+
+        //    $("#validation-success").html("");
+        //});
+    });
+
+    function setPasswordEditor(container, options) {
+        $('<input type="password" id="Password" name="' + options.field + '" title="Password" required="required" autocomplete="off" aria-labelledby="Password-form-label" data-bind="value: Password" aria-describedby="Password-form-hint"/>')
+            .appendTo(container)
+            .kendoTextBox();
+    }
+
+    function onFormValidateField(e) {
+        $("#validation-success").html("");
+    }
+
+    function onFormSubmit(e) {
+        e.preventDefault();
+        $("#validation-success").html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
+    }
+
+    function onFormClear(e) {
+        $("#validation-success").html("");
+    }
+</script>
